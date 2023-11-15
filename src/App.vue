@@ -70,7 +70,8 @@
     </div>
     <!-- need a footer with github icon -->
     <div class="flex justify-center items-center gap-4">
-      <a href="https://github.com/yongruifang/" class="icon-[carbon--logo-github] w-10 h-10 hover:bg-white"></a>
+      <a href="https://github.com/yongruifang/minesweeper"
+        class="icon-[carbon--logo-github] w-10 h-10 hover:bg-white"></a>
     </div>
     <Confetti :passed="win" />
   </div>
