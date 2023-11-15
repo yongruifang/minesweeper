@@ -295,13 +295,13 @@ const throttle = (func: Function, wait: number) => {
 }
 const nervous = () => {
   throttle(() => {
-    emoji.value = '🫣';
+    if (!gameOver.value) emoji.value = '🫣';
   }, 300)
 }
 const relax = () => {
   clearTimeout(nervous_timer.value);
   nervous_timer.value = 0;
-  if (!win.value) emoji.value = '🙂';
+  if (!gameOver.value) emoji.value = '🙂';
 }
 // watch unrevealed , when it is equal to mineAmount, win
 watch(unrevealed, (newVal) => {
