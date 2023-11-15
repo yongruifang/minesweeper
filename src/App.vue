@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full justify-center items-center">
-    <h1 class="w-full text-3xl font-bold leading-7 text-orange-500  my-4 text-center">
-      MineSweeper
+    <h1 class="w-full text-3xl font-bold leading-7 text-red-500  my-8 text-center">
+      扫雷游戏
     </h1>
     <div class="w-full flex justify-center items-center mb-8 gap-8">
       <div class="flex justify-center items-center h-full md:text-xl text-center text-orange-500 font-bold"
