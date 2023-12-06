@@ -76,12 +76,12 @@
       </button>
     </div>
     <!-- need a footer with github icon -->
-    <div class="flex justify-center">
+    <footer class="flex justify-center mt-8">
       <a href="https://github.com/yongruifang/minesweeper" class="icon-[carbon--logo-github] w-6 h-6 mr-4"></a>
       <button @click="toggleDark()">
         <i class="icon-[carbon--sun] dark:icon-[carbon--moon]" />
       </button>
-    </div>
+    </footer>
     <Confetti :passed="win" />
   </div>
 </template>
