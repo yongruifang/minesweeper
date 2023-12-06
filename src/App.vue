@@ -57,7 +57,9 @@
       {{ t("app.count") }}: {{ unrevealed }}
       <!-- wrap  a line-->
       <br />
-      {{ help }}
+      <div v-show="gameOver">
+        {{ win ? t("app.over.win") : (timer === 0 ? t("app.over.timeout") : t("app.over.boom")) }}
+      </div>
     </div>
     <div class="my-4 flex justify-center items-center gap-4">
       <button class="rounded-full bg-teal-600 hover:bg-teal-700 px-4  border-b text-xs md:text-md lg:text-lg"
@@ -127,7 +129,7 @@ const getShuffled = (size: number, mines: number): Number[] => {
   const shuffled = gameArray.sort(() => Math.random() - 0.5);
   return shuffled;
 };
-const size = ref(10);
+const size = ref(5);
 const unrevealed = ref(size.value * size.value);
 const state = reactive(
   {
@@ -148,7 +150,7 @@ const state = reactive(
     )
   }
 )
-const mineAmount = ref(10);
+const mineAmount = ref(5);
 const emoji = ref('🙂');
 // the amount of flags
 const flags = ref(mineAmount.value);
