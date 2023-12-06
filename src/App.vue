@@ -1,21 +1,22 @@
 <template>
-  <div class="flex flex-col w-full justify-center items-center">
-    <h1 class="w-full text-3xl font-bold leading-7 text-red-500  my-8 text-center">
+  <div class="flex flex-col w-full justify-center items-center" bg-white dark:bg-black>
+    <h1 class="w-full text-3xl font-bold leading-7  my-8 text-center">
       扫雷游戏
     </h1>
     <div class="w-full flex justify-center items-center mb-8 gap-8">
-      <div class="flex justify-center items-center h-full md:text-xl text-center text-orange-500 font-bold"
+      <div class="flex justify-center items-center h-full md:text-xl text-center  font-bold"
         style="border-color:#7c8a76 #e2e8ce #7c8a76 #e2e8ce;">
-        🚩&nbsp;{{ flags }}
+        <i class="icon-[carbon--flag-filled]"></i>&nbsp;{{ flags }}
       </div>
-      <button
-        class=" bg-gray-200/25 hover:bg-gray-700 w-8 h-8 rounded overflow-visible text-6xl flex justify-center items-center"
-        @click="reset">
-        {{ emoji }}
+      <button class=" w-8 h-8 overflow-visible text-5xl flex justify-center items-center" @click="reset">
+        <div id="emoji">
+          {{ emoji }}
+          <span class="tooltiptext">重开</span>
+        </div>
       </button>
-      <div class=" h-full md:text-xl text-center text-orange-500 font-bold flex justify-center items-center"
+      <div class=" h-full md:text-xl text-center font-bold flex justify-center items-center"
         style="border-color:#7c8a76 #e2e8ce #7c8a76 #e2e8ce;">
-        ⏱️&nbsp;{{ timer }}
+        <i class="icon-[carbon--alarm]"></i>&nbsp;{{ timer }}
       </div>
     </div>
     <table class="w-full border-collapse rounded flex overflow-auto">
@@ -59,19 +60,21 @@
       {{ help }}
     </div>
     <div class="my-4 flex justify-center items-center gap-4">
-      <button class="rounded-full bg-teal-600 hover:bg-teal-700 px-4 border-dashed border-b text-xs md:text-md lg:text-lg"
-        @click="changeLevel(5, 4)">EASY</button>
-      <button class="rounded-full bg-teal-600 hover:bg-teal-700 px-4 border-dashed border-b text-xs md:text-md lg:text-lg"
-        @click="changeLevel(10, 10)">MEDIUM</button>
-      <button class="rounded-full bg-teal-600 hover:bg-teal-700 px-4 border-dashed border-b text-xs md:text-md lg:text-lg"
-        @click="changeLevel(15, 20)">HARD</button>
-      <button class="rounded-full bg-teal-600 hover:bg-teal-700 px-4 border-dashed border-b text-xs md:text-md lg:text-lg"
-        @click="devMode()">DEV</button>
+      <button class="rounded-full bg-teal-600 hover:bg-teal-700 px-4  border-b text-xs md:text-md lg:text-lg"
+        @click="changeLevel(5, 4)">容易</button>
+      <button class="rounded-full bg-teal-600 hover:bg-teal-700 px-4 border-b text-xs md:text-md lg:text-lg"
+        @click="changeLevel(10, 10)">中等</button>
+      <button class="rounded-full bg-teal-600 hover:bg-teal-700 px-4  border-b text-xs md:text-md lg:text-lg"
+        @click="changeLevel(15, 20)">困难</button>
+      <button class="rounded-full bg-teal-600 hover:bg-teal-700 px-4  border-b text-xs md:text-md lg:text-lg"
+        @click="devMode()">透视</button>
     </div>
     <!-- need a footer with github icon -->
-    <div class="flex justify-center items-center gap-4">
-      <a href="https://github.com/yongruifang/minesweeper"
-        class="icon-[carbon--logo-github] w-10 h-10 hover:bg-white"></a>
+    <div class="flex justify-center">
+      <a href="https://github.com/yongruifang/minesweeper" class="icon-[carbon--logo-github] w-6 h-6 mr-4"></a>
+      <button @click="toggleDark()">
+        <i class="icon-[carbon--sun] dark:icon-[carbon--moon]" />
+      </button>
     </div>
     <Confetti :passed="win" />
   </div>
@@ -79,6 +82,11 @@
 <script setup lang="ts">
 import Confetti from './components/Confetti.vue';
 import { onMounted, ref, reactive, watch } from 'vue';
+import { useDark, useToggle } from '@vueuse/core'
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
+
 interface BlockState {
   x: number,
   y: number,
@@ -268,7 +276,7 @@ const onRightClick = (item: BlockState) => {
     flags.value++;
   } else if (item.doubt) {
     item.doubt = false;
-  } else {
+  } else if (flags.value > 0) {
     item.flagged = true;
     flags.value--;
   }
@@ -326,3 +334,26 @@ onMounted(() => {
   reset()
 })
 </script>
+<style scoped>
+#emoji {
+  position: relative;
+  display: inline-block;
+}
+
+#emoji .tooltiptext {
+  visibility: hidden;
+  text-align: center;
+  font-size: 15px;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* 定位 */
+  position: absolute;
+  z-index: 1;
+  top: -20px;
+  left: 35%;
+}
+
+#emoji:hover .tooltiptext {
+  visibility: visible;
+}
+</style>

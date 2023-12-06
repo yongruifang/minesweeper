@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@types/canvas-confetti": "^1.6.3",
+    "@vueuse/core": "^10.7.0",
     "canvas-confetti": "^1.9.0",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-i18n": "^9.8.0"
   },
   "devDependencies": {
     "@iconify-json/carbon": "^1.1.21",
