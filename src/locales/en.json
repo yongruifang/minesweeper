@@ -1,0 +1,22 @@
+{
+  "app": {
+    "title": "Minesweeper Game",
+    "count": "count",
+    "reset": "reset",
+    "level": {
+      "easy": "Ⅰ",
+      "medium": "Ⅱ",
+      "hard": "Ⅲ"
+    },
+    "over": {
+      "boom": "Pick a mine! You Lose!",
+      "timeout": "Time Out! You Lose!",
+      "win": "congratulations! You Win!"
+    },
+    "eye": "O.O",
+    "lang": {
+      "switch": "switch",
+      "name": "en"
+    }
+  }
+}

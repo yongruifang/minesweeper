@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full justify-center items-center" bg-white dark:bg-black>
     <h1 class="w-full text-3xl font-bold leading-7  my-8 text-center">
-      扫雷游戏
+      {{ t("app.title") }}
     </h1>
     <div class="w-full flex justify-center items-center mb-8 gap-8">
       <div class="flex justify-center items-center h-full md:text-xl text-center  font-bold"
@@ -11,7 +11,7 @@
       <button class=" w-8 h-8 overflow-visible text-5xl flex justify-center items-center" @click="reset">
         <div id="emoji">
           {{ emoji }}
-          <span class="tooltiptext">重开</span>
+          <span class="tooltiptext">{{ t("app.reset") }}</span>
         </div>
       </button>
       <div class=" h-full md:text-xl text-center font-bold flex justify-center items-center"
@@ -54,20 +54,26 @@
     </table>
     <!-- level opt -->
     <div class="text-md text-center">
-      Count: {{ unrevealed }}
+      {{ t("app.count") }}: {{ unrevealed }}
       <!-- wrap  a line-->
       <br />
       {{ help }}
     </div>
     <div class="my-4 flex justify-center items-center gap-4">
       <button class="rounded-full bg-teal-600 hover:bg-teal-700 px-4  border-b text-xs md:text-md lg:text-lg"
-        @click="changeLevel(5, 4)">容易</button>
+        @click="changeLevel(5, 4)">{{ t("app.level.easy") }}</button>
       <button class="rounded-full bg-teal-600 hover:bg-teal-700 px-4 border-b text-xs md:text-md lg:text-lg"
-        @click="changeLevel(10, 10)">中等</button>
+        @click="changeLevel(10, 10)">{{ t("app.level.medium") }}</button>
       <button class="rounded-full bg-teal-600 hover:bg-teal-700 px-4  border-b text-xs md:text-md lg:text-lg"
-        @click="changeLevel(15, 20)">困难</button>
+        @click="changeLevel(15, 20)">{{ t("app.level.hard") }}</button>
       <button class="rounded-full bg-teal-600 hover:bg-teal-700 px-4  border-b text-xs md:text-md lg:text-lg"
-        @click="devMode()">透视</button>
+        @click="devMode()">{{ t("app.eye") }}</button>
+    </div>
+    <div class="flex text-sm gap-4">
+      {{ t("app.lang.name") }}
+      <button @click="changeLang" class=" bg-teal-600 hover:bg-teal-700 px-4 rounded-full">
+        {{ t("app.lang.switch") }}
+      </button>
     </div>
     <!-- need a footer with github icon -->
     <div class="flex justify-center">
@@ -83,10 +89,25 @@
 import Confetti from './components/Confetti.vue';
 import { onMounted, ref, reactive, watch } from 'vue';
 import { useDark, useToggle } from '@vueuse/core'
+import { useI18n } from 'vue-i18n'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
-
+const { t, locale } = useI18n();
+// 3 langs
+const currentlang = ref(0)
+const changeLang = () => {
+  if (currentlang.value >= 2) {
+    currentlang.value = 0;
+  } else {
+    currentlang.value++;
+  }
+  switch (currentlang.value) {
+    case 0: locale.value = 'en'; break;
+    case 1: locale.value = 'zh-CN'; break;
+    case 2: locale.value = 'zh-TW'; break;
+  }
+}
 interface BlockState {
   x: number,
   y: number,
@@ -227,7 +248,7 @@ const onClick = (x: number, y: number) => {
   unrevealed.value -= 1;
   if (state.grid[y][x].mine) {
     emoji.value = '😵';
-    help.value = 'Pick a mine! You Lose!'
+    help.value = t("app.over.boom")
     clearInterval(intervalId.value);
     gameOver.value = true;
   } else {
@@ -316,7 +337,7 @@ watch(unrevealed, (newVal) => {
   if (newVal === mineAmount.value) {
     emoji.value = '🥳';
     clearInterval(intervalId.value);
-    help.value = 'congratulations! You Win!'
+    help.value = t("app.over.win")
     gameOver.value = true;
     win.value = true
   }
@@ -326,7 +347,7 @@ watch(timer, (newVal) => {
     // clear timer
     clearInterval(intervalId.value);
     emoji.value = '😵';
-    help.value = 'Time Out! You Lose!'
+    help.value = t("app.over.timeout")
     gameOver.value = true;
   }
 })
