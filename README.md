@@ -1,5 +1,5 @@
 # Deploy
-部署在[https://clinquant-jelly-274144.netlify.app/](https://clinquant-jelly-274144.netlify.app/)
+[minesweeper-remake.netlify.app](https://minesweeper-remake.netlify.app/)
 
 # Vue 3 + TypeScript + Vite
 
